@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="color-scheme" content="light dark"><title>问芽 · 让好奇心生长</title><link rel="stylesheet" href="/vendor/katex/katex.min.css"><link rel="stylesheet" href="/style.css"></head>
+<body>
+  <aside id="sidebar" class="sidebar">
+    <a class="brand" href="/"><span class="brand-icon">芽</span><span>问芽<small>QUESTION GARDEN</small></span></a>
+    <div class="workspace-label">我的学习空间</div>
+    <nav><button class="nav active" data-view="home"><span>⌂</span> 学习总览</button><button class="nav" data-view="records"><span>▤</span> 题目分类 <b id="count">0</b></button><div id="category-nav" class="category-nav" aria-label="科目与章节分类"></div><button class="nav" data-view="memory"><span>◇</span> 记忆卡片</button><button class="nav" data-view="review"><span>◷</span> 每日回顾</button></nav>
+    <div class="sidebar-bottom"><div class="local-dot">本地文件存储</div><p>在聊天中探索，<br>在这里留住理解。</p><button id="settings-open" class="settings-link">ⓘ 记录方式与存储</button></div>
+  </aside>
+  <main>
+    <header><div class="header-title"><button id="sidebar-toggle" class="icon-button" aria-controls="sidebar" aria-expanded="true" aria-label="隐藏侧边栏" title="隐藏侧边栏">☰</button><div class="breadcrumb">我的学习空间 <span>/</span> <strong id="view-label">学习总览</strong></div></div><div class="header-actions"><span class="date-label" id="today-label"></span><button id="theme-toggle" class="icon-button" aria-label="切换暗黑模式" title="切换暗黑模式">◐</button><button id="header-settings" class="icon-button" aria-label="记录方式与存储">⚙</button></div></header>
+    <section class="page-heading"><div><div class="eyebrow">STAY CURIOUS, THINK DEEPER</div><h1 id="page-title">好奇心，正在生长。</h1><p id="page-description">从分类出发，看见每一次记录。</p></div><span class="heading-flower">✳</span></section>
+    <details class="notice record-help" hidden><summary>如何记录题目</summary><p>在本项目聊天窗口讨论题目，说「录入这道题」后由助手整理，并按科目和章节保存。这里是你的笔记与学习档案。</p></details>
+    
+    <section id="view-home" class="view">
+      <div class="home-total" id="home-total"></div>
+      <div id="home-subjects" class="home-subjects"></div>
+      <section class="home-week">
+        <div class="week-intro"><span class="week-kicker">近七天 · 含今天</span><div class="week-total-line"><strong id="week-total">00</strong><span>道题</span></div><p>每一次记录，都留下一个新的起点。</p></div>
+        <div class="week-detail"><div class="week-heading"><h2>这一周的提问轨迹</h2><span id="week-period"></span></div><div id="week-chart" class="week-chart"></div></div>
+      </section>
+      <div class="home-section-heading"><div><span class="week-kicker">CHAPTERS</span><h2>沿着章节，继续探索。</h2></div><span>点击分类，回到题目</span></div>
+      <div id="home-topics" class="home-topics"></div>
+    </section>
+    <section id="view-records" class="view" hidden><div class="classification-toolbar"><label>科目<select id="category-select" aria-label="选择科目"><option value="数学分析">数学分析</option><option value="高等代数">高等代数</option></select></label><label>章节<select id="subcategory-select" aria-label="选择章节"></select></label></div><div class="section-toolbar"><select id="records-range" aria-label="显示范围"><option value="day">单日</option><option value="month">全月</option><option value="all">全部题目</option></select><input type="date" id="records-date" aria-label="档案日期"><input type="month" id="records-month" aria-label="档案月份" hidden><input type="search" id="search" placeholder="搜索题目与提问…" aria-label="搜索记录"><button id="export" class="outline">导出当前结果 ↓</button></div><p id="records-summary" class="records-summary" aria-live="polite"></p><div id="records-list" class="question-grid"></div></section>
+    <section id="view-memory" class="view" hidden><div class="memory-toolbar"><select id="memory-category" aria-label="记忆卡片分类"><option value="all">全部分类</option><option value="数学分析">数学分析</option><option value="高等代数">高等代数</option></select><select id="memory-subcategory" aria-label="记忆卡片章节"></select><select id="memory-range" aria-label="记忆范围"><option value="month">本月</option><option value="all">全部题目</option></select><button id="memory-shuffle" class="outline">打乱顺序</button><span id="memory-summary" class="subtle"></span></div><div id="memory-empty" class="empty" hidden>当前范围没有可复习的题目。</div><div id="memory-deck"><div class="memory-progress"><span id="memory-progress-text"></span><i><b id="memory-progress-bar"></b></i></div><article id="memory-card" class="memory-card" tabindex="0" role="button" aria-label="点击翻开答案"><div id="memory-front" class="memory-face"></div><div id="memory-back" class="memory-face" hidden></div><span id="memory-flip-hint">点击卡片查看答案</span></article><div class="memory-actions"><button id="memory-prev" class="outline" aria-label="上一张">← 上一张</button><button id="memory-flip" class="primary">查看答案</button><button id="memory-known" class="outline">标记已记住</button><button id="memory-next" class="outline" aria-label="下一张">下一张 →</button></div></div></section>
+    <section id="view-review" class="view" hidden><div class="section-toolbar"><input type="date" id="review-date" aria-label="回顾日期"><span class="subtle">显示在项目聊天中整理并保存的回顾</span></div><div id="review-stats" class="stats"></div><article id="review-content" class="review-content markdown"></article></section>
+    <footer>问芽 <span>·</span> 为好奇心留一点空间</footer>
+  </main>
+  <dialog id="settings-dialog"><div class="dialog-heading"><h2>记录方式与存储</h2><button id="settings-close" class="text-button" aria-label="关闭">✕</button></div><p>① 在本项目聊天窗口发截图、提问和讨论。<br>② 明确说「录入这道题」，助手整理题目、思路和评分，写入本地文件。<br>③ 在这里查看分类档案、为题目补充笔记和阅读回顾。</p><p>网页每 5 秒读取一次本地记录，切回页面也会刷新。网页不读取聊天窗口，不调用模型服务。</p><div class="storage-info">学习数据目录<code id="storage-path"></code>按天保存 JSON 文件。备份时复制 data/days 文件夹即可。</div></dialog>
+  <dialog id="question-dialog" class="question-dialog"><div class="reader-header sticky"><div class="dialog-heading"><span id="question-category" class="category-tag"></span><button id="question-close" class="text-button" aria-label="关闭题目详情">✕ 返回列表</button></div><nav class="reader-nav" aria-label="阅读快捷跳转"><button data-reader-target="reader-problem">题干</button><button data-reader-target="reader-reasoning">推理</button><button data-reader-target="reader-note">笔记</button></nav></div><h2 id="question-title" class="reader-title"></h2><div id="question-content"></div><section id="reader-note" class="question-note"><h3>新增这道题的笔记</h3><div class="question-note-fields"><label>日期<input type="date" id="question-note-date"></label><label class="grow">笔记<textarea id="question-note-input" placeholder="写下新的理解、疑问或推导…"></textarea></label></div><div class="note-actions"><button id="question-note-save" class="primary">保存并标注日期</button></div></section></dialog>
+  <div id="toast" role="status" hidden></div>
+  <script src="/vendor/marked/marked.umd.js"></script><script src="/vendor/katex/katex.min.js"></script><script type="module" src="/app.js"></script>
+</body></html>

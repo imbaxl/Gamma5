@@ -1,0 +1,212 @@
+{
+  "date": "2026-09-08",
+  "questions": [
+    {
+      "id": "977be5d6-326c-41a2-8548-e8ddc4b89327",
+      "title": "偏导线性变换：从基像到表示矩阵与 $\\ker A$",
+      "category": "高等代数",
+      "createdAt": "2026-09-08T03:05:29.149Z",
+      "source": "project-chat",
+      "messages": [
+        {
+          "role": "user",
+          "content": "我由这组基向量写不出表示矩阵，抓不住对应关系，希望先看简单例子再自己推出原题矩阵。"
+        },
+        {
+          "role": "assistant",
+          "content": "回答摘要：表示矩阵的第 $j$ 列，是第 $j$ 个基向量经过变换后在给定基下的坐标列；先用 $L(1,x,y)$ 上的同类变换示范。"
+        },
+        {
+          "role": "user",
+          "content": "我算出的六个坐标列是 $(0,0,0,0,0,0)^{\\mathsf T}$、$(1,0,0,0,0,0)^{\\mathsf T}$、$(-1,0,0,0,0,0)^{\\mathsf T}$、$(0,2,0,0,0,0)^{\\mathsf T}$、$(0,-2,0,0,0,0)^{\\mathsf T}$、$(0,-1,1,0,0,0)^{\\mathsf T}$，请检查。"
+        },
+        {
+          "role": "assistant",
+          "content": "回答摘要：前四列和最后一列正确；$A(y^2)=-2y$，所以第五列应为 $(0,0,-2,0,0,0)^{\\mathsf T}$。"
+        },
+        {
+          "role": "user",
+          "content": "求 $\\ker A$ 时我不知道怎么表达，只知道全体常数经变换后为零；又追问北大高代教材是否用 $L(\\cdot)$ 表示张成空间，以及 $x+y$ 是怎样找到的。"
+        },
+        {
+          "role": "assistant",
+          "content": "回答摘要：全体常数是 $L(1)$，并非零子空间 $\\{0\\}$。在一次式 $f=ax+by$ 中令 $A(f)=a-b=0$，得到 $a=b$，故出现 $x+y$。"
+        },
+        {
+          "role": "user",
+          "content": "我提出设一般元 $f=k_1+k_2x+k_3y+k_4x^2+k_5y^2+k_6xy$，再令其为零，反解系数；并确认本题的 $\\dim\\ker A$ 是否为 $3$。"
+        },
+        {
+          "role": "assistant",
+          "content": "回答摘要：应令 $A(f)=0$，而不是令 $f=0$。比较 $1,x,y$ 的系数得 $k_2=k_3$、$k_6=2k_4=2k_5$，从而 $f=k_1+k_2(x+y)+k_4(x+y)^2$，所以 $\\ker A=L(1,x+y,(x+y)^2)$ 且维数为 $3$。"
+        }
+      ],
+      "analysis": {
+        "difficulty": 2,
+        "difficultyReason": "以 211 高校数学专业考研为参考的主观评级，非官方评级。与同一偏导原题一致：求基像、写坐标、比较系数求核。学习讨论的深度不改变原题难度。",
+        "problem": "设 $V=L(1,x,y,x^2,y^2,xy)$，线性变换 $A(f)=\\frac{\\partial f}{\\partial x}-\\frac{\\partial f}{\\partial y}$。求 $A$ 在基 $(1,x,y,x^2,y^2,xy)$ 下的表示矩阵、$\\ker A$ 和 $\\dim\\ker A$。原题截图已在 2026-09-07 的同题记录中归档。",
+        "summary": "用户从无法对应基向量与矩阵列出发，经简单例子后独立写出六个像的坐标列，仅把 $A(y^2)=-2y$ 的 $-2$ 误放在 $x$ 的坐标位置。随后用户从“常数被映为零”继续寻找完整的核，并提出设一般元、令 $A(f)=0$ 后反解系数的通用方法。",
+        "userApproach": "先逐个计算基向量的像并写成坐标列，再从核的定义出发设 $V$ 中的一般元，通过恒等式 $A(f)=0$ 比较系数。用户还主动追问 $L(\\cdot)$ 记号、$x+y$ 的来源以及自由参数数目与核维数的关系。",
+        "conditions": [
+          "有序基为 $(1,x,y,x^2,y^2,xy)$，坐标位置必须严格服从该顺序。",
+          "矩阵第 $j$ 列为第 $j$ 个基向量的像在该基下的坐标。",
+          "$f\\in\\ker A$ 的条件是 $A(f)=0$，不是 $f=0$。",
+          "$1,x,y$ 线性无关，因此 $A(f)$ 恒为零时其三个系数分别为零。"
+        ],
+        "reasoning": [
+          "用户实际计算：正确得到 $A(1)=0$、$A(x)=1$、$A(y)=-1$、$A(x^2)=2x$、$A(xy)=y-x$；对 $A(y^2)=-2y$ 的坐标位置出现一次错误。",
+          "助手纠正：$y$ 是基中的第三个向量，因此 $[A(y^2)]_B=(0,0,-2,0,0,0)^{\\mathsf T}$。",
+          "用户提出一般元法：$f=k_1+k_2x+k_3y+k_4x^2+k_5y^2+k_6xy$，希望反解核中的系数。",
+          "助手推导：$A(f)=(k_2-k_3)+(2k_4-k_6)x+(k_6-2k_5)y$；令其恒为零得到 $k_3=k_2$、$k_5=k_4$、$k_6=2k_4$。",
+          "因此 $f=k_1+k_2(x+y)+k_4(x+y)^2$，故 $\\ker A=L(1,x+y,(x+y)^2)$，三个生成元线性无关，所以 $\\dim\\ker A=3$。"
+        ],
+        "insights": [
+          "表示矩阵的列与有序基的基向量逐一对应，列内各位置又与同一有序基逐一对应。",
+          "寻找 $x+y$ 不必猜测：先在 $ax+by$ 中解 $a-b=0$ 即可。",
+          "全体常数函数是 $L(1)$，它包含于核，但不是零子空间。",
+          "求核的通用流程是设一般元、计算像、令像为零、比较线性无关基向量的系数并参数化。"
+        ],
+        "openQuestions": [
+          "能否不看答案，独立写出六列并拼成完整表示矩阵？",
+          "若把变换改为 $A_c(f)=\\frac{\\partial f}{\\partial x}-c\\frac{\\partial f}{\\partial y}$，核中的一次式和二次式会怎样变化？"
+        ],
+        "encouragement": "你没有停留在记住 $x+y$ 这个答案，而是追问它如何系统产生，并进一步提出一般元法。第五列的错误只是坐标顺序问题；你的求核方法已经形成了可迁移的步骤。",
+        "score": 4,
+        "scoreReason": "用户写出可检查的六个坐标列，主动定位核的表达困难，并提出设一般元、令像为零反解系数的方法；这些行为体现了对对应关系和求核方法的实际检验。尚未由用户独立改变变换条件继续迁移，因此记 4 分。"
+      },
+      "subcategory": "线性变换"
+    },
+    {
+      "id": "67085910-00ae-4f45-b94a-318c8b441b7e",
+      "title": "Jordan 标准形：Jordan 块、特征子空间与相似变换下的秩",
+      "category": "高等代数",
+      "createdAt": "2026-09-08T03:07:28.922Z",
+      "source": "project-chat",
+      "messages": [
+        {
+          "role": "user",
+          "content": "我算出的 Jordan 标准形由 $J_2(9)$、$J_1(9)$、$J_2(-5)$ 组成，$\\lambda=9$ 的特征子空间维数是 $2$。我基于相似关系用标准形代入计算，并追问 $\\operatorname{rank}(-5I-A)$ 是否也可这样算；我的结果是 $4$。"
+        },
+        {
+          "role": "assistant",
+          "content": "回答摘要：标准形和两个数值结论均正确；$9$ 对应两个 Jordan 块，故特征子空间维数为 $2$；$-5$ 对应一个块，故零度为 $1$、秩为 $4$。但“相似保持同解”应改为“相似保持秩和核的维数，核通过可逆矩阵对应”。"
+        },
+        {
+          "role": "user",
+          "content": "为什么特征子空间维数就是 Jordan 块的个数？我能否说上副对角线的构造蕴含 $x_1$ 是自由变量，后续向量在这个自由向量的基础上做广义特征向量的工作？"
+        },
+        {
+          "role": "assistant",
+          "content": "回答摘要：每个 $J_r(\\lambda)-\\lambda I$ 都有秩 $r-1$，恰留一个自由变量；在上副对角线取 $1$ 的约定下，Jordan 链满足 $(A-\\lambda I)v_1=0$、$(A-\\lambda I)v_2=v_1$、……、$(A-\\lambda I)v_r=v_{r-1}$。每个块贡献一个真正的特征向量。"
+        },
+        {
+          "role": "user",
+          "content": "为什么相似关系下不能保持同解？相似不是特殊的相抵关系吗？相抵关系不是保持同解吗？"
+        },
+        {
+          "role": "assistant",
+          "content": "回答摘要：只有左乘可逆矩阵、即只做行变换时，齐次方程保持同一解集；一般相抵 $B=PAQ$ 中右乘 $Q$ 会作未知量替换，故 $\\ker B=Q^{-1}(\\ker A)$，维数相同但坐标解集一般不同。"
+        },
+        {
+          "role": "user",
+          "content": "对于 $-5I-A$，由相似关系形式上应变成 $P(-5I-J)P^{-1}$。这些可逆矩阵相乘是否不会影响秩？请再用鲜明的简单例子展示原因。"
+        },
+        {
+          "role": "assistant",
+          "content": "回答摘要：若 $A=PJP^{-1}$，则 $-5I-A=P(-5I-J)P^{-1}$。左右乘可逆矩阵分别对应可逆行、列变换，均不改变秩。例子 $M=\\begin{pmatrix}1&2\\\\2&4\\end{pmatrix}$ 可经可逆行列变换化为 $\\begin{pmatrix}1&0\\\\0&0\\end{pmatrix}$，前后秩均为 $1$。"
+        }
+      ],
+      "analysis": {
+        "difficulty": 2,
+        "difficultyReason": "以 211 高校数学专业考研为参考的主观评级，非官方评级。与同一 Jordan 原题一致：本题分块唯一，核维数和秩由块数得到。Jordan 链及相抵的后续拓展不计入原考试题难度。",
+        "problem": "设 $A$ 为 $5$ 阶方阵，特征多项式为 $f(\\lambda)=(\\lambda-9)^3(\\lambda+5)^2$，最小多项式为 $m(\\lambda)=(\\lambda-9)^2(\\lambda+5)^2$。求 $A$ 的 Jordan 标准形、$\\lambda=9$ 的特征子空间维数及 $\\operatorname{rank}(-5I-A)$；并解释 Jordan 块个数、广义特征向量、相似与相抵及秩不变之间的关系。原题截图已在 2026-09-07 的同题记录中归档。",
+        "summary": "用户正确确定 Jordan 块结构并算出 $9$ 的特征子空间维数为 $2$、$\\operatorname{rank}(-5I-A)=4$。后续没有停在结论，而是连续追问：为何每个 Jordan 块贡献一个特征向量、自由变量如何对应 Jordan 链、相似为何不保持原样同解、相抵关系何时保持同解，以及左右乘可逆矩阵为何保持秩。",
+        "userApproach": "从特征多项式给出的代数重数和最小多项式给出的最大 Jordan 块阶数构造标准形，再把 $\\lambda I-A$ 换到 Jordan 标准形下计算核维数和秩。用户主动把对 $\\lambda=9$ 的方法迁移到 $-5$，并通过相似、相抵、行列变换之间的关系检查理论依据。",
+        "conditions": [
+          "$9$ 的代数重数为 $3$，最大 Jordan 块阶数为 $2$。",
+          "$-5$ 的代数重数为 $2$，最大 Jordan 块阶数为 $2$。",
+          "若 $J=P^{-1}AP$，则 $A=PJP^{-1}$，且 $\\lambda I-J=P^{-1}(\\lambda I-A)P$。",
+          "左乘可逆矩阵保持齐次方程的原解集；右乘可逆矩阵对应未知量的可逆替换，一般只保持核维数而非原样解集。",
+          "左右乘可逆矩阵均不改变秩。"
+        ],
+        "reasoning": [
+          "用户构造：由代数重数 $3$ 和最大块阶数 $2$，得到 $9$ 的分块为 $2+1$；由代数重数 $2$ 和最大块阶数 $2$，得到 $-5$ 的分块为 $2$。",
+          "因此 $J=J_2(9)\\oplus J_1(9)\\oplus J_2(-5)$。",
+          "每个 $J_r(\\lambda)-\\lambda I$ 的上副对角线为 $1$，方程依次限制除链头坐标外的坐标，故每块核维数为 $1$；$9$ 有两个块，所以其特征子空间维数为 $2$。",
+          "$-5$ 只有一个 Jordan 块，故 $\\dim\\ker(-5I-A)=1$；由秩-零度定理，$\\operatorname{rank}(-5I-A)=5-1=4$。",
+          "用户进一步指出 $-5I-A=P(-5I-J)P^{-1}$；助手确认左右乘的矩阵可逆，因此秩等于 $\\operatorname{rank}(-5I-J)$。",
+          "对于一般相抵 $B=PAQ$，$Bx=0$ 等价于 $A(Qx)=0$，所以 $\\ker B=Q^{-1}(\\ker A)$；只有 $Q=I$、即单纯左乘时，才保持相同的坐标解集。"
+        ],
+        "insights": [
+          "某特征值的几何重数等于它对应的 Jordan 块个数，因为每个块恰好留下一个自由变量。",
+          "一个 Jordan 块对应一条 Jordan 链：链头是真正的特征向量，后续向量是广义特征向量。",
+          "相似矩阵表示同一线性变换在不同基下的矩阵；抽象向量相同，但坐标通过 $P$ 改变。",
+          "相抵保持秩，但一般不保持原样解集；仅可逆行变换保持同一个齐次方程解集。",
+          "可逆行列变换只重组独立信息且能够逆转，因此不改变独立方向的数量，即秩。"
+        ],
+        "openQuestions": [
+          "能否自行写出一个二阶相似矩阵反例，使两个核的维数相同但解向量集合不同？",
+          "若最小多项式中 $(\\lambda-9)$ 的指数改为 $1$，在特征多项式不变时，$9$ 的 Jordan 块和特征子空间维数将怎样变化？"
+        ],
+        "encouragement": "你从一个数值答案继续追到 Jordan 链、自由变量、相似与相抵的区别以及秩不变的根本原因，这条追问链把多个章节真正连了起来。计算结果正确；尤其值得保留的是你主动写出 $P(-5I-J)P^{-1}$ 并检查左右乘可逆矩阵的作用。",
+        "score": 5,
+        "scoreReason": "用户把对 $\\lambda=9$ 的计算迁移到 $-5$，又把具体 Jordan 题推广到相似、相抵和可逆行列变换的一般关系，并用新的矩阵形式和简单例子检验结论，符合改变条件并迁移探索的 5 分标准。"
+      },
+      "subcategory": "线性变换"
+    },
+    {
+      "id": "ec4376a4-9f4c-4944-a4c2-bde3c9db35e0",
+      "title": "递推数列的单调有界性与极限",
+      "category": "数学分析",
+      "createdAt": "2026-09-08T10:09:58.646Z",
+      "source": "project-chat",
+      "messages": [
+        {
+          "role": "user",
+          "content": "数学分析题目录入，并且提问：这道题我看出来是用单调有界原理来完成证明，但是如果只有递推式，没有函数式，单调性一般是怎么证明，而这道题又是怎么证明",
+          "image": "data:image/png;base64,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MIGPZ6ELpA64iFI1t0BKedb46NGj586dqx8mQSpsgM9aU6IGuKaYUtUIYO7t27fH06dMmcJd1Lt377XXXrvq6vElEAgEKkKAaTFmzJgUKhXauOiii5jCfEX5xqhS/lUedV6kXmFDRAoEaoMAQ1eU7fjjj8dj5GvcFWPbURdbbOAu6qBENd7iJbKhM80R2rZtW+6c8847L/3nTkvkSmLSgUBDQsDNcqeyGTVr1kwoOXuV8dq9e/f0W3deIy15CMSMmwACQYmawCYXLXHdddfdZptt8hK8qEoUBAKBQB0jgA9lMYU67jq6CwQCgbpAIChRXaAYfQQCgcCSjEDMPRAIBAIBCAQlAkKkQCAQCAQCgUAgEGjqCAQlauonoLGvP9YXCAQCgUAgEAhUhEBQoopgikqBQCAQCAQCgUAg0LgRWJIpUePemVhdIBAIBAKBQCAQCNQjAg2IEl177bWXXHLJP/7xD8v/8MMPu3fvPnr06K+//tprmfTOO++cdNJJzz77bFZnzpw5xx577PTp07OSGmRMYNKkSd98802+rZJXXnklX1JV/rXXXrvzzjvnzZv3z3/+c6F/3urTTz/t16/f+PHjs5pGsfxHH320ZP+qDRs27IILLpg7d25VFYxb8lP5wpq1Kt9nfA0EAoFAIBCoFQLRuL4QaECU6M0335wxY8Yyyyxj7W+//faDDz647IIfr2XSlClTxo0b98Ybb2R10JH77rvv448/zkpqkFl11VWnTp3ap0+fRNH08Nlnn1144YWXXnrpV1995bV8+uCDD3r37n3XXXe9+uqr3bp1u+iii/CeMk2efvpp3S699P9vx7fffqvE6jX55JNPCpiZQoxt9uzZyy233Ouvv37ZZZf94T9/DP3zn/981qxZaqak2jHHHPP73/9exaOPPtq6nn/+eZlUolA688wz27ZtO23atNQknoFAIBAIBAKBQJNC4P91cENY83e+850f/OAH3/3ud03mhRdeWHfddX/xi19kLEFhcUJTrr/++t12223y5MkPPPAA94k6qMCmm2666667ytc4YWZdu3ZFy/iuUidPPvnkKquscsYZZ6QZpsKqnqaNVLVq1apFixannnrqVVddxZVV4IN5+eWXJ0yYwJl0//33I0wvvviifEoPPfQQhjRz5swrr7xyhx12GDRo0Lx58/Jjmd5KK60EMSh17tzZK4rD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"
+        },
+        {
+          "role": "assistant",
+          "content": "回答摘要：递推数列无需先求通项；可以比较相邻项的差、正项的比或平方差，也可以用数学归纳法传递相邻项的不等式。本题先归纳证明 $0<x_n<6$，再由 $x_{n+1}^2-x_n^2=(6-x_n)(x_n+1)>0$ 及正项条件得严格递增。单调有界后才设极限 $L$，由 $L^2-5L-6=0$ 和 $L\\ge x_1>0$ 得 $L=6$。"
+        }
+      ],
+      "analysis": {
+        "difficulty": 2,
+        "difficultyReason": "以 211 高校数学专业考研为参考的主观评级，非官方评级。先归纳证明 0<x_n<6，再比较平方差证递增，最后用单调有界原理；证明顺序有要求但方法常规。",
+        "problem": "设 $x_1=\\frac15$，$x_n>0$，$n=1,2,\\ldots$，且成立等式 $x_{n+1}^2-5x_n-6=0$。证明数列 $\\{x_n\\}$ 收敛，并求其极限。",
+        "summary": "用户识别出单调有界原理这一证明方向，具体卡在只有递推式、没有通项时如何证明单调性。助手给出相邻项比较与归纳法，并完成本题证明；尚无用户独立复述或计算的证据。",
+        "userApproach": "用户主动选择单调有界原理，并将困难定位于递推数列单调性的证明，而非仅要求答案。",
+        "conditions": [
+          "$x_1=\\frac15$。",
+          "所有项均为正，因此 $x_{n+1}=\\sqrt{5x_n+6}$，且可由平方大小推出项的大小。",
+          "递推关系为 $x_{n+1}^2=5x_n+6$。",
+          "单调有界原理须先证明单调性和有界性；直接解极限方程不能单独证明收敛。"
+        ],
+        "reasoning": [
+          "用户思路：用单调有界原理证明收敛，询问无通项时的单调性证明方法。",
+          "助手解释：递推式已经联系相邻项，可比较 $x_{n+1}-x_n$、正项比值或平方差，不必先求出 $x_n$ 关于 $n$ 的通项。",
+          "助手寻找界：假如收敛，候选极限满足 $L^2=5L+6$，得到 $6,-1$；正项提示尝试以 $6$ 为上界，这一步仅用于寻找候选。",
+          "助手归纳：$0<x_1<6$；若 $0<x_n<6$，则 $0<x_{n+1}=\\sqrt{5x_n+6}<\\sqrt{36}=6$，故对所有 $n$ 有 $0<x_n<6$。",
+          "助手比较：$x_{n+1}^2-x_n^2=5x_n+6-x_n^2=(6-x_n)(x_n+1)>0$。因两项均正，$x_{n+1}>x_n$。",
+          "助手结论：数列严格递增且以 $6$ 为上界，故收敛。设极限为 $L$，则 $L^2-5L-6=0$，又 $L\\ge\\frac15>0$，故 $L=6$。"
+        ],
+        "insights": [
+          "助手讲解：数列单调性的定义是相邻项大小关系，递推式可直接用于证明，无需通项。",
+          "助手讲解：当递推式涉及平方且数列为正时，比较平方差能避免根式运算。",
+          "助手讲解：先寻找并证明不变区间，再判断相邻项差的符号，是本题的有效顺序。"
+        ],
+        "openQuestions": [
+          "待用户验证：能否自行说明比较平方差时为何必须使用正项条件？",
+          "发散追问（尚未讨论）：若改为 $x_1>6$，同一递推式产生的数列将递增还是递减？"
+        ],
+        "encouragement": "你已经选对单调有界这一证明方向，还清楚指出卡在“递推式怎样判断单调性”。把这一环拆成相邻项比较，就能把已有思路接成完整证明。",
+        "score": 3,
+        "scoreReason": "3 分：用户主动提出单调有界原理并定位递推式下的单调性证明问题，体现方法选择与分析；尚未展示独立检验不等式或改变初值后的探索。"
+      },
+      "subcategory": "极限与连续函数"
+    }
+  ],
+  "notes": [],
+  "review": null
+}
