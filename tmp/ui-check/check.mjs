@@ -1,0 +1,72 @@
+
+import fs from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+const require=createRequire('C:/Users/Administrator/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/runtime-probe.cjs');
+const {chromium}=require('playwright');
+const browser=await chromium.launch({headless:true,channel:'msedge'});
+const errors=[];
+await fs.mkdir('tmp/ui-check',{recursive:true});
+try {
+ const phone=await browser.newPage({viewport:{width:375,height:812},isMobile:true,hasTouch:true});
+ phone.on('pageerror',e=>errors.push(e.message));
+ await phone.goto('http://127.0.0.1:3210');
+ await phone.locator('.nav[data-view="records"]').click();
+ await phone.locator('#records-range').selectOption('all');
+ await phone.locator('#category-select').selectOption('数学分析');
+ await phone.locator('#subcategory-select').selectOption('级数');
+ await phone.waitForFunction(()=>document.querySelectorAll('.question-card').length===2);
+ assert.match(await phone.locator('#records-summary').innerText(),/级数 · 2 道题/);
+ for(const width of [320,375,430]) {
+  await phone.setViewportSize({width,height:812});
+  assert.ok(await phone.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'手机列表横向溢出：'+width);
+ }
+ await phone.setViewportSize({width:375,height:812});
+ await phone.screenshot({path:'tmp/ui-check/mobile-list.png'});
+ await phone.locator('.question-card').first().click();
+ await phone.locator('#question-dialog').waitFor({state:'visible'});
+ assert.match(await phone.locator('#question-category').innerText(),/数学分析 · 级数/);
+ assert.equal(await phone.locator('#reader-problem .markdown').evaluate(el=>getComputedStyle(el).fontSize),'16px');
+ assert.ok(await phone.locator('#question-dialog').evaluate(el=>el.scrollWidth<=el.clientWidth),'手机详情横向溢出');
+ await phone.screenshot({path:'tmp/ui-check/mobile-reader.png'});
+ await phone.locator('[data-reader-target="reader-reasoning"]').click();
+ const positions=await phone.evaluate(()=>({header:document.querySelector('.reader-header').getBoundingClientRect().bottom,reasoning:document.querySelector('#reader-reasoning').getBoundingClientRect().top}));
+ assert.ok(positions.reasoning>=positions.header && positions.reasoning<400,JSON.stringify(positions));
+ await phone.locator('[data-reader-target="reader-note"]').click();
+ assert.ok(await phone.locator('#question-note-input').isVisible());
+ await phone.screenshot({path:'tmp/ui-check/mobile-note.png'});
+ await phone.locator('#question-close').click();
+ await phone.waitForFunction(()=>!document.body.classList.contains('reading-question'));
+ assert.equal(await phone.evaluate(()=>document.body.classList.contains('reading-question')),false);
+ await phone.locator('.nav[data-view="memory"]').click();
+ await phone.locator('#memory-range').selectOption('all');
+ await phone.locator('#memory-category').selectOption('数学分析');
+ await phone.locator('#memory-subcategory').selectOption('级数');
+ await phone.waitForFunction(()=>document.querySelector('#memory-progress-text').textContent==='1 / 2');
+ await phone.locator('#memory-flip').click();
+ assert.ok(await phone.locator('#memory-back').isVisible());
+ assert.ok(await phone.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'手机记忆卡片横向溢出');
+ await phone.locator('#theme-toggle').click();
+ await phone.screenshot({path:'tmp/ui-check/mobile-memory-dark.png'});
+ const desktop=await browser.newPage({viewport:{width:1440,height:1000}});
+ desktop.on('pageerror',e=>errors.push(e.message));
+ await desktop.goto('http://127.0.0.1:3210');
+ await desktop.locator('.nav[data-view="records"]').click();
+ await desktop.locator('#records-range').selectOption('all');
+ await desktop.locator('#category-nav [data-category="数学分析"]').first().click();
+ await desktop.locator('#category-nav [data-subcategory="级数"]').click();
+ await desktop.waitForFunction(()=>document.querySelectorAll('.question-card').length===2);
+ assert.equal(await desktop.locator('#subcategory-select').inputValue(),'级数');
+ await desktop.screenshot({path:'tmp/ui-check/desktop-classification.png'});
+ const downloadPromise=desktop.waitForEvent('download');
+ await desktop.locator('#export').click();
+ const download=await downloadPromise;
+ await download.saveAs('tmp/ui-check/export.json');
+ const exported=JSON.parse(await fs.readFile('tmp/ui-check/export.json','utf8'));
+ assert.equal(exported.length,2);
+ assert.ok(exported.every(q=>q.subcategory==='级数'));
+ assert.ok(exported.some(q=>q.messages.some(m=>m.image?.startsWith('data:image/'))),'导出缺少原始截图');
+ assert.deepEqual(errors,[]);
+ console.log('浏览器验证通过：320/375/430px 手机列表、详情字号与快捷跳转、记忆章节筛选、暗色模式、桌面分类和含截图导出；无页面脚本错误。');
+}finally{await browser.close();}
+
